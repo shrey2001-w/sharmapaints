@@ -8,12 +8,11 @@ const HeroSection = () => {
     <section className="relative w-full h-screen min-h-[500px]">
       {/* Background Image */}
       <Image
-        src="/Images/paintshop.png"
-        alt="Sharma Paints Background"
-        fill
-        priority
-        className="object-cover"
-      />
+  src="/Images/background.png"
+  alt="Background"
+  width={1200}
+  height={800}
+/>
 
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/50"></div>
