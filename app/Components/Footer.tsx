@@ -14,7 +14,7 @@ const Footer = () => {
         {/* Left Side - Logo */}
         <div className="flex items-center">
           <Image
-            src="/images/logo.png"
+            src="/Images/logo.png"
             alt="Sharma Paints Logo"
             width={120}
             height={120}

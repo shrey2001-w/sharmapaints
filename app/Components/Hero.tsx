@@ -8,7 +8,7 @@ const HeroSection = () => {
     <section className="relative w-full h-screen min-h-[500px]">
       {/* Background Image */}
       <Image
-        src="/images/paintshop.png"
+        src="/Images/paintshop.png"
         alt="Sharma Paints Background"
         fill
         priority

@@ -61,7 +61,7 @@ export default function ProductDetailsPage() {
               />
 
               <Image
-                src={product.images[0]}
+                src={product.Images[0]}
                 alt={product.name}
                 width={800}
                 height={800}
@@ -149,7 +149,7 @@ export default function ProductDetailsPage() {
                     addToCart({
                       id: product.id,
                       name: product.name,
-                      image: product.images[0],
+                      image: product.Images[0],
                       selectedSize,
                       quantity: 1,
                     });
@@ -199,7 +199,7 @@ export default function ProductDetailsPage() {
             </div>
 
             {/* After Application Results */}
-            {product.images.length > 1 && (
+            {product.Images.length > 1 && (
               <div>
                 <h2 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-5 flex items-center gap-2">
                   <span
@@ -210,7 +210,7 @@ export default function ProductDetailsPage() {
                 </h2>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-                  {product.images.slice(1).map((img, index) => (
+                  {product.Images.slice(1).map((img, index) => (
                     <div
                       key={index}
                       className="overflow-hidden rounded-xl sm:rounded-2xl shadow-lg group"
@@ -260,7 +260,7 @@ export default function ProductDetailsPage() {
                       >
                         <div className="w-[64px] h-[64px] sm:w-[78px] sm:h-[78px] rounded-xl overflow-hidden flex-shrink-0 shadow-md">
                           <Image
-                            src={item.images[0]}
+                            src={item.Images[0]}
                             alt={item.name}
                             width={90}
                             height={90}

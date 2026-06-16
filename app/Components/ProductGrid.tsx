@@ -20,7 +20,7 @@ const products: Product[] = [
     category: "Oil Based",
     price: 449,
     originalPrice: 599,
-    image: "/images/enamel1.png",
+    image: "/Images/enamel1.png",
   },
   {
     id: 2,
@@ -28,7 +28,7 @@ const products: Product[] = [
     category: "Oil Based",
     price: 629,
     originalPrice: 699,
-    image: "/images/wood2.png",
+    image: "/Images/wood2.png",
   },
   {
     id: 3,
@@ -36,7 +36,7 @@ const products: Product[] = [
     category: "Water Based",
     price: 499,
     originalPrice: 649,
-    image: "/images/interior.png",
+    image: "/Images/interior.png",
   },
   {
     id: 4,
@@ -44,7 +44,7 @@ const products: Product[] = [
     category: "Water Based",
     price: 699,
     originalPrice: 899,
-    image: "/images/exterior.png",
+    image: "/Images/exterior.png",
   },
   {
     id: 5,
@@ -52,7 +52,7 @@ const products: Product[] = [
     category: "Cement Based",
     price: 399,
     originalPrice: 450,
-    image: "/images/birla.png",
+    image: "/Images/birla.png",
   },
   {
     id: 6,
@@ -60,7 +60,7 @@ const products: Product[] = [
     category: "Cement Based",
     price: 499,
     originalPrice: 550,
-    image: "/images/cement.png",
+    image: "/Images/cement.png",
   },
   {
     id: 7,
@@ -68,7 +68,7 @@ const products: Product[] = [
     category: "Waterproofing",
     price: 799,
     originalPrice: 1099,
-    image: "/images/water.png",
+    image: "/Images/water.png",
   },
   {
     id: 8,
@@ -76,7 +76,7 @@ const products: Product[] = [
     category: "Waterproofing",
     price: 999,
     originalPrice: 1399,
-    image: "/images/urp.png",
+    image: "/Images/urp.png",
   },
   {
     id: 9,
@@ -84,7 +84,7 @@ const products: Product[] = [
     category: "Accessories",
     price: 99,
     originalPrice: 120,
-    image: "/images/brush.png",
+    image: "/Images/brush.png",
   },
   {
     id: 10,
@@ -92,7 +92,7 @@ const products: Product[] = [
     category: "Accessories",
     price: 199,
     originalPrice: 250,
-    image: "/images/roller.png",
+    image: "/Images/roller.png",
   },
 ];
 

@@ -15,7 +15,7 @@ const PrivacyPolicy = () => {
           {/* Logo */}
           <div className="flex justify-center mb-6">
             <img
-              src="/images/logo.png"
+              src="/Images/logo.png"
               alt="Sharma Agencies Logo"
               className="w-44 sm:w-52 object-contain"
             />

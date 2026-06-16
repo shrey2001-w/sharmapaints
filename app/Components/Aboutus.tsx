@@ -11,7 +11,7 @@ const AboutUs = () => {
         {/* Left Side Image */}
         <div className="relative w-full min-h-[500px] lg:min-h-full rounded-3xl overflow-hidden shadow-xl">
           <Image
-            src="/images/shop.png"
+            src="/Images/shop.png"
             alt="Sharma Paints Shop"
             fill
             className="object-cover"

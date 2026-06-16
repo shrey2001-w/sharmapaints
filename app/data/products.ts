@@ -10,13 +10,13 @@ export const products = [
       { size: "5 Litre", price: 1999 },
       { size: "10 Litre", price: 3499 },
     ],
-    images: [
-      "/images/enamel1.png",
-      "/images/enamel7.png",
-      "/images/enamel8.png",
-      "/images/enamel4.png",
-      "/images/enamel5.png",
-      "/images/enamel6.png",
+    Images: [
+      "/Images/enamel1.png",
+      "/Images/enamel7.png",
+      "/Images/enamel8.png",
+      "/Images/enamel4.png",
+      "/Images/enamel5.png",
+      "/Images/enamel6.png",
     ],
   },
 
@@ -31,13 +31,13 @@ export const products = [
       { size: "5 Litre", price: 2499 },
       { size: "10 Litre", price: 4499 },
     ],
-    images: [
-      "/images/wood2.png",
-      "/images/enamel7.png",
-      "/images/enamel8.png",
-      "/images/enamel3.png",
-      "/images/enamel4.png",
-      "/images/enamel5.png",
+    Images: [
+      "/Images/wood2.png",
+      "/Images/enamel7.png",
+      "/Images/enamel8.png",
+      "/Images/enamel3.png",
+      "/Images/enamel4.png",
+      "/Images/enamel5.png",
     ],
   },
 
@@ -52,13 +52,13 @@ export const products = [
       { size: "5 Litre", price: 2199 },
       { size: "10 Litre", price: 3899 },
     ],
-    images: [
-      "/images/interior.png",
-      "/images/enamel7.png",
-      "/images/enamel8.jpg",
-      "/images/enamel3.jpg",
-      "/images/enamel4.jpg",
-      "/images/enamel5.jpg",
+    Images: [
+      "/Images/interior.png",
+      "/Images/enamel7.png",
+      "/Images/enamel8.jpg",
+      "/Images/enamel3.jpg",
+      "/Images/enamel4.jpg",
+      "/Images/enamel5.jpg",
     ],
   },
 
@@ -73,13 +73,13 @@ export const products = [
       { size: "5 Litre", price: 2899 },
       { size: "10 Litre", price: 4999 },
     ],
-    images: [
-      "/images/exterior.png",
-      "/images/enamel7.png",
-      "/images/enamel8.png",
-      "/images/enamel3.png",
-      "/images/enamel4.png",
-      "/images/enamel5.png",
+    Images: [
+      "/Images/exterior.png",
+      "/Images/enamel7.png",
+      "/Images/enamel8.png",
+      "/Images/enamel3.png",
+      "/Images/enamel4.png",
+      "/Images/enamel5.png",
     ],
   },
 
@@ -94,13 +94,13 @@ export const products = [
       { size: "10 Kg", price: 699 },
       { size: "20 Kg", price: 1199 },
     ],
-    images: [
-      "/images/birla.png",
-      "/images/enamel8.png",
-      "/images/enamel7.png",
-      "/images/enamel3.png",
-      "/images/enamel4.png",
-      "/images/enamel5.png",
+    Images: [
+      "/Images/birla.png",
+      "/Images/enamel8.png",
+      "/Images/enamel7.png",
+      "/Images/enamel3.png",
+      "/Images/enamel4.png",
+      "/Images/enamel5.png",
     ],
   },
 
@@ -115,13 +115,13 @@ export const products = [
       { size: "10 Kg", price: 899 },
       { size: "20 Kg", price: 1499 },
     ],
-    images: [
-      "/images/cement.png",
-      "/images/enamel8.png",
-      "/images/enamel7.png",
-      "/images/enamel3.png",
-      "/images/enamel4.png",
-      "/images/enamel5.png",
+    Images: [
+      "/Images/cement.png",
+      "/Images/enamel8.png",
+      "/Images/enamel7.png",
+      "/Images/enamel3.png",
+      "/Images/enamel4.png",
+      "/Images/enamel5.png",
     ],
   },
 
@@ -136,13 +136,13 @@ export const products = [
       { size: "5 Litre", price: 2999 },
       { size: "10 Litre", price: 5499 },
     ],
-    images: [
-      "/images/water.png",
-     "/images/enamel8.png",
-      "/images/enamel7.png",
-      "/images/enamel3.png",
-      "/images/enamel4.png",
-      "/images/enamel5.png",
+    Images: [
+      "/Images/water.png",
+     "/Images/enamel8.png",
+      "/Images/enamel7.png",
+      "/Images/enamel3.png",
+      "/Images/enamel4.png",
+      "/Images/enamel5.png",
     ],
   },
 
@@ -157,13 +157,13 @@ export const products = [
       { size: "5 Litre", price: 3499 },
       { size: "10 Litre", price: 6499 },
     ],
-    images: [
-      "/images/urp.png",
-    "/images/enamel8.png",
-      "/images/enamel7.png",
-      "/images/enamel3.png",
-      "/images/enamel4.png",
-      "/images/enamel5.png",
+    Images: [
+      "/Images/urp.png",
+    "/Images/enamel8.png",
+      "/Images/enamel7.png",
+      "/Images/enamel3.png",
+      "/Images/enamel4.png",
+      "/Images/enamel5.png",
     ],
   },
 
@@ -174,7 +174,7 @@ export const products = [
     description:
       "Professional quality paint brush for smooth paint application.",
     sizes: [{ size: "Standard", price: 99 }],
-    images: ["/images/brush.png"],
+    Images: ["/Images/brush.png"],
   },
 
   {
@@ -184,6 +184,6 @@ export const products = [
     description:
       "Premium paint roller designed for fast and even wall coverage.",
     sizes: [{ size: "Standard", price: 199 }],
-    images: ["/images/roller.png"],
+    Images: ["/Images/roller.png"],
   },
 ];
