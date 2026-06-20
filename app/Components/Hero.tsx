@@ -4,11 +4,11 @@ import Image from "next/image";
 import React, { useState, useEffect, useCallback } from "react";
 
 const images = [
-  { src: "/Images/shop.png", alt: "Shop 1" },
-  { src: "/Images/shop2.png", alt: "Shop 2" },
-  { src: "/Images/shop3.png", alt: "Shop 3" },
-  { src: "/Images/shop4.png", alt: "Shop 4" },
-  { src: "/Images/shop5.png", alt: "Shop 5" },
+  { src: "/Images/1.png", alt: "Shop 1" },
+  { src: "/Images/2.png", alt: "Shop 2" },
+  { src: "/Images/3.png", alt: "Shop 3" },
+  { src: "/Images/6.png", alt: "Shop 4" },
+  
 ];
 
 const HeroSection = () => {
@@ -54,7 +54,7 @@ const HeroSection = () => {
       ))}
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black/50 z-10" />
+      <div className="absolute inset-0  z-10" />
 
       {/* Left Arrow */}
       <button

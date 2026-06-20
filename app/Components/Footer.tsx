@@ -40,7 +40,7 @@ const Footer = () => {
                 alt="Sharma Paints Logo"
                 width={160}
                 height={60}
-                className="object-contain h-14 w-auto brightness-0 invert"
+                className="object-contain h-14 w-auto "
               />
             </Link>
             <p className="text-sm text-gray-400 leading-relaxed max-w-xs">
