@@ -8,7 +8,6 @@ const images = [
   { src: "/Images/2.png", alt: "Shop 2" },
   { src: "/Images/3.png", alt: "Shop 3" },
   { src: "/Images/6.png", alt: "Shop 4" },
-  
 ];
 
 const HeroSection = () => {
@@ -28,14 +27,16 @@ const HeroSection = () => {
   const prev = () => goTo(current - 1);
   const next = () => goTo(current + 1);
 
-  // Auto-advance every 5 seconds
   useEffect(() => {
     const timer = setInterval(() => goTo(current + 1), 5000);
     return () => clearInterval(timer);
   }, [current, goTo]);
 
   return (
-    <section className="relative w-full h-screen min-h-[500px] overflow-hidden">
+    <section className="relative w-full overflow-hidden bg-black
+      h-[55vw] sm:h-[60vw] md:h-[65vw] lg:h-screen
+      min-h-[220px] max-h-screen"
+    >
       {/* Crossfade Images */}
       {images.map((img, i) => (
         <div
@@ -48,20 +49,19 @@ const HeroSection = () => {
             alt={img.alt}
             fill
             priority={i === 0}
-            className="object-cover"
+            className="object-contain"   // ← changed from object-cover
+            sizes="100vw"
           />
         </div>
       ))}
-
-      {/* Dark Overlay */}
-      <div className="absolute inset-0  z-10" />
 
       {/* Left Arrow */}
       <button
         onClick={prev}
         aria-label="Previous image"
-        className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-20
-          w-12 h-12 flex items-center justify-center
+        className="absolute left-2 sm:left-4 md:left-8 top-1/2 -translate-y-1/2 z-20
+          w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12
+          flex items-center justify-center
           bg-white/20 hover:bg-white/40 backdrop-blur-sm
           rounded-full border border-white/30
           transition-all duration-200 hover:scale-110 cursor-pointer"
@@ -72,7 +72,7 @@ const HeroSection = () => {
           viewBox="0 0 24 24"
           strokeWidth={2.5}
           stroke="white"
-          className="w-5 h-5"
+          className="w-4 h-4 sm:w-5 sm:h-5"
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
         </svg>
@@ -82,8 +82,9 @@ const HeroSection = () => {
       <button
         onClick={next}
         aria-label="Next image"
-        className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20
-          w-12 h-12 flex items-center justify-center
+        className="absolute right-2 sm:right-4 md:right-8 top-1/2 -translate-y-1/2 z-20
+          w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12
+          flex items-center justify-center
           bg-white/20 hover:bg-white/40 backdrop-blur-sm
           rounded-full border border-white/30
           transition-all duration-200 hover:scale-110 cursor-pointer"
@@ -94,14 +95,14 @@ const HeroSection = () => {
           viewBox="0 0 24 24"
           strokeWidth={2.5}
           stroke="white"
-          className="w-5 h-5"
+          className="w-4 h-4 sm:w-5 sm:h-5"
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
         </svg>
       </button>
 
       {/* Dot Indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+      <div className="absolute bottom-3 sm:bottom-5 md:bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {images.map((_, i) => (
           <button
             key={i}
@@ -109,8 +110,8 @@ const HeroSection = () => {
             aria-label={`Go to slide ${i + 1}`}
             className={`rounded-full transition-all duration-300 cursor-pointer
               ${i === current
-                ? "w-8 h-2.5 bg-white"
-                : "w-2.5 h-2.5 bg-white/50 hover:bg-white/80"
+                ? "w-6 sm:w-8 h-2 sm:h-2.5 bg-white"
+                : "w-2 sm:w-2.5 h-2 sm:h-2.5 bg-white/50 hover:bg-white/80"
               }`}
           />
         ))}
@@ -120,7 +121,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-6 md:px-8 z-10">
         <h1
           className="text-white text-center font-bold leading-tight
-            text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+            text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
         >
           {/* Your heading text here */}
         </h1>
