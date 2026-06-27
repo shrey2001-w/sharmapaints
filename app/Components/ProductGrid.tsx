@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useCart } from "@/app/context/CartContext";
 
 interface Product {
   id: number;
@@ -14,94 +15,61 @@ interface Product {
 }
 
 const products: Product[] = [
-  {
-    id: 1,
-    name: "Synthetic Enamel Paint",
-    category: "Oil Based",
-    price: 449,
-    originalPrice: 599,
-    image: "/Images/enamel1.png",
-  },
-  {
-    id: 2,
-    name: "Wood Finish Paint",
-    category: "Oil Based",
-    price: 629,
-    originalPrice: 699,
-    image: "/Images/wood2.png",
-  },
-  {
-    id: 3,
-    name: "Interior Emulsion",
-    category: "Water Based",
-    price: 499,
-    originalPrice: 649,
-    image: "/Images/interior.png",
-  },
-  {
-    id: 4,
-    name: "Exterior Emulsion",
-    category: "Water Based",
-    price: 699,
-    originalPrice: 899,
-    image: "/Images/exterior.png",
-  },
-  {
-    id: 5,
-    name: "Wall Putty",
-    category: "Cement Based",
-    price: 399,
-    originalPrice: 450,
-    image: "/Images/birla.png",
-  },
-  {
-    id: 6,
-    name: "White Cement",
-    category: "Cement Based",
-    price: 499,
-    originalPrice: 550,
-    image: "/Images/cement.png",
-  },
-  {
-    id: 7,
-    name: "Waterproof Coating",
-    category: "Waterproofing",
-    price: 799,
-    originalPrice: 1099,
-    image: "/Images/water.png",
-  },
-  {
-    id: 8,
-    name: "Roof Waterproof Solution",
-    category: "Waterproofing",
-    price: 999,
-    originalPrice: 1399,
-    image: "/Images/urp.png",
-  },
-  {
-    id: 9,
-    name: "Paint Brush",
-    category: "Accessories",
-    price: 99,
-    originalPrice: 120,
-    image: "/Images/brush.png",
-  },
-  {
-    id: 10,
-    name: "Paint Roller",
-    category: "Accessories",
-    price: 199,
-    originalPrice: 250,
-    image: "/Images/roller.png",
-  },
+  // Distemper
+  { id: 11, name: "1 kg Utsav", category: "Distemper", price: 329, originalPrice: 429, image: "/Images/distemper1.png" },
+  { id: 12, name: "2kg Asian Uno", category: "Distemper", price: 249, originalPrice: 349, image: "/Images/distemper2.png" },
+  { id: 13, name: "5kg Asian Uno", category: "Distemper", price: 329, originalPrice: 429, image: "/Images/distemper1.png" },
+  { id: 14, name: "10kg Asian Uno", category: "Distemper", price: 249, originalPrice: 349, image: "/Images/distemper2.png" },
+  { id: 15, name: "20 kg Asian Uno", category: "Distemper", price: 329, originalPrice: 429, image: "/Images/distemper1.png" },
+  { id: 16, name: "2kg British Acri Silk", category: "Distemper", price: 249, originalPrice: 349, image: "/Images/distemper2.png" },
+  { id: 17, name: "5kg British Acri Silk", category: "Distemper", price: 329, originalPrice: 429, image: "/Images/distemper1.png" },
+  { id: 18, name: "10kg British Acri Silk", category: "Distemper", price: 249, originalPrice: 349, image: "/Images/distemper2.png" },
+  { id: 19, name: "20kg British Acri Silk", category: "Distemper", price: 329, originalPrice: 429, image: "/Images/distemper1.png" },
+  { id: 20, name: "2kg Nerolac Beauty", category: "Distemper", price: 249, originalPrice: 349, image: "/Images/distemper2.png" },
+  { id: 21, name: "5kg Nerolac Beauty", category: "Distemper", price: 329, originalPrice: 429, image: "/Images/distemper1.png" },
+  { id: 22, name: "10kg Nerolac Beauty", category: "Distemper", price: 249, originalPrice: 349, image: "/Images/distemper2.png" },
+  { id: 23, name: "20kg Nerolac Beauty", category: "Distemper", price: 329, originalPrice: 429, image: "/Images/distemper1.png" },
+
+  // Emulsions
+  { id: 3, name: "Interior Emulsion", category: "Emulsions", price: 499, originalPrice: 649, image: "/Images/interior.png" },
+  { id: 4, name: "Exterior Emulsion", category: "Emulsions", price: 699, originalPrice: 899, image: "/Images/exterior.png" },
+
+  // Cement Based Products
+  { id: 5, name: "Wall Putty", category: "Cement Based Products", price: 399, originalPrice: 450, image: "/Images/birla.png" },
+  { id: 6, name: "White Cement", category: "Cement Based Products", price: 499, originalPrice: 550, image: "/Images/cement.png" },
+
+  // Waterproofing
+  { id: 7, name: "Waterproof Coating", category: "Waterproofing", price: 799, originalPrice: 1099, image: "/Images/water.png" },
+  { id: 8, name: "Roof Waterproof Solution", category: "Waterproofing", price: 999, originalPrice: 1399, image: "/Images/urp.png" },
+
+  // Enamel
+  { id: 1, name: "Synthetic Enamel Paint", category: "Enamel", price: 449, originalPrice: 599, image: "/Images/enamel1.png" },
+  { id: 2, name: "Wood Finish Paint", category: "Enamel", price: 629, originalPrice: 699, image: "/Images/wood2.png" },
+
+  // Accessories
+  { id: 9, name: "Paint Brush", category: "Accessories", price: 99, originalPrice: 120, image: "/Images/brush.png" },
+  { id: 10, name: "Paint Roller", category: "Accessories", price: 199, originalPrice: 250, image: "/Images/roller.png" },
+];
+
+const CATEGORIES = [
+  "All",
+  "Distemper",
+  "Emulsions",
+  "Cement Based Products",
+  "Waterproofing",
+  "Enamel",
+  "Accessories",
 ];
 
 export default function ProductsGrid() {
+  const { addToCart, removeFromCart, updateQuantity } = useCart();
+
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [priceRange, setPriceRange] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const categories = ["All", ...new Set(products.map((p) => p.category))];
+  // Track quantity per product (0 = not in cart)
+  const [quantities, setQuantities] = useState<Record<number, number>>({});
 
   const filteredProducts = products.filter((product) => {
     const categoryMatch =
@@ -133,6 +101,39 @@ export default function ProductsGrid() {
   const getDiscount = (price: number, originalPrice: number) =>
     Math.round((1 - price / originalPrice) * 100);
 
+  const handleAddToCart = (product: Product) => {
+    setQuantities((prev) => ({ ...prev, [product.id]: 1 }));
+    addToCart({
+      id: product.id,
+      name: product.name,
+      image: product.image,
+      selectedSize: { size: "Standard", price: product.price },
+      quantity: 1,
+    });
+  };
+
+  const increaseQty = (product: Product) => {
+    const next = (quantities[product.id] ?? 1) + 1;
+    setQuantities((prev) => ({ ...prev, [product.id]: next }));
+    updateQuantity(product.id, next);
+  };
+
+  const decreaseQty = (product: Product) => {
+    const current = quantities[product.id] ?? 1;
+    if (current <= 1) {
+      setQuantities((prev) => {
+        const updated = { ...prev };
+        delete updated[product.id];
+        return updated;
+      });
+      removeFromCart(product.id);
+    } else {
+      const next = current - 1;
+      setQuantities((prev) => ({ ...prev, [product.id]: next }));
+      updateQuantity(product.id, next);
+    }
+  };
+
   return (
     <section className="py-16 px-4 bg-gray-50 min-h-screen">
       <div className="max-w-6xl mx-auto">
@@ -148,7 +149,7 @@ export default function ProductsGrid() {
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col gap-4 mb-8 max-w-3xl mx-auto">
+        <div className="flex flex-col gap-4 mb-8 max-w-4xl mx-auto">
 
           {/* Search */}
           <div className="relative">
@@ -173,7 +174,7 @@ export default function ProductsGrid() {
 
           {/* Category Pills */}
           <div className="flex flex-wrap justify-center gap-2">
-            {categories.map((cat) => (
+            {CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
@@ -214,6 +215,8 @@ export default function ProductsGrid() {
             {filteredProducts.map((product) => {
               const discount = getDiscount(product.price, product.originalPrice);
               const savings = product.originalPrice - product.price;
+              const qty = quantities[product.id] ?? 0;
+              const inCart = qty > 0;
 
               return (
                 <div
@@ -231,6 +234,11 @@ export default function ProductsGrid() {
                     {discount > 0 && (
                       <span className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
                         {discount}% OFF
+                      </span>
+                    )}
+                    {inCart && (
+                      <span className="absolute top-2 right-2 bg-emerald-500 text-white text-xs font-semibold px-2 py-0.5 rounded-full">
+                        In Cart
                       </span>
                     )}
                   </div>
@@ -260,11 +268,40 @@ export default function ProductsGrid() {
                         </span>
                       )}
 
-                      <Link href={`/products/${product.id}`}>
-                        <button className="w-full py-2 rounded-xl border border-gray-200 text-sm text-gray-700 font-medium hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-150">
-                          View Details
-                        </button>
-                      </Link>
+                      {/* Buttons */}
+                      <div className="flex flex-col gap-2">
+                        {!inCart ? (
+                          <button
+                            onClick={() => handleAddToCart(product)}
+                            className="w-full py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition-all duration-150 flex items-center justify-center gap-1.5"
+                          >
+                            <svg
+                              className="w-3.5 h-3.5"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth={2}
+                              viewBox="0 0 24 24"
+                            >
+                              <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                              <line x1="3" y1="6" x2="21" y2="6" />
+                              <path d="M16 10a4 4 0 0 1-8 0" />
+                            </svg>
+                            Add to Cart
+                          </button>
+                        ) : (
+                          <QuantityControl
+                            qty={qty}
+                            onIncrease={() => increaseQty(product)}
+                            onDecrease={() => decreaseQty(product)}
+                          />
+                        )}
+
+                        <Link href={`/products/${product.id}`}>
+                          <button className="w-full py-2 rounded-xl border border-gray-200 text-sm text-gray-700 font-medium hover:bg-gray-50 hover:border-gray-300 transition-all duration-150">
+                            View Details
+                          </button>
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -289,5 +326,38 @@ export default function ProductsGrid() {
         )}
       </div>
     </section>
+  );
+}
+
+// ─── Quantity Control ───────────────────────────────────────────────────────
+function QuantityControl({
+  qty,
+  onIncrease,
+  onDecrease,
+}: {
+  qty: number;
+  onIncrease: () => void;
+  onDecrease: () => void;
+}) {
+  return (
+    <div className="flex items-center justify-between w-full rounded-xl border border-blue-200 bg-blue-50 overflow-hidden">
+      <button
+        onClick={onDecrease}
+        className="flex-1 py-2 text-blue-700 font-bold text-lg hover:bg-blue-100 transition-colors"
+        aria-label="Decrease quantity"
+      >
+        −
+      </button>
+      <span className="px-3 text-sm font-semibold text-blue-800 min-w-[2rem] text-center">
+        {qty}
+      </span>
+      <button
+        onClick={onIncrease}
+        className="flex-1 py-2 text-blue-700 font-bold text-lg hover:bg-blue-100 transition-colors"
+        aria-label="Increase quantity"
+      >
+        +
+      </button>
+    </div>
   );
 }

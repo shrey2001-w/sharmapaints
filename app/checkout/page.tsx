@@ -167,7 +167,7 @@ export default function CheckoutPage() {
             <h2 className="text-lg font-medium text-gray-800 mb-1">Your cart is empty</h2>
             <p className="text-sm text-gray-400 mb-6">Add some items to get started</p>
             <button
-              onClick={() => router.push("/products")}
+              onClick={() => router.push("/product")}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
             >
               Browse products

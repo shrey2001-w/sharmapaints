@@ -8,6 +8,7 @@ const images = [
   { src: "/Images/2.png", alt: "Shop 2" },
   { src: "/Images/3.png", alt: "Shop 3" },
   { src: "/Images/6.png", alt: "Shop 4" },
+  { src: "/Images/sharma.png", alt: "Shop 4" },
 ];
 
 const HeroSection = () => {

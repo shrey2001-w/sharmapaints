@@ -132,7 +132,7 @@ const Footer = () => {
             <ul className="space-y-4">
               <li>
                 <a
-                  href="mailto:info@sharmapaints.com"
+                  href="mailto:bhattshrey21@gmail.com"
                   className="flex items-start gap-3 group"
                 >
                   <span className="mt-0.5 w-8 h-8 shrink-0 flex items-center justify-center rounded-lg bg-orange-500/10 group-hover:bg-orange-500/20 border border-orange-500/20 transition-all duration-150">
@@ -143,7 +143,7 @@ const Footer = () => {
                   <div>
                     <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Email</p>
                     <p className="text-sm text-gray-300 group-hover:text-orange-400 transition-colors duration-150 mt-0.5">
-                      info@sharmapaints.com
+                      bhattshrey21@gmail.com
                     </p>
                   </div>
                 </a>
@@ -178,7 +178,7 @@ const Footer = () => {
                 <div>
                   <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Location</p>
                   <p className="text-sm text-gray-300 mt-0.5 leading-relaxed">
-                    Faridabad, Haryana, India
+                    196/1 Juhi Lal Caloney, Kanpur
                   </p>
                 </div>
               </li>
