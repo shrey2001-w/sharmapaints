@@ -29,6 +29,11 @@ export default function CheckoutPage() {
   });
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
+  // Payment modal state
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [paymentLoading, setPaymentLoading] = useState<"stripe" | "cod" | null>(null);
+  const [codSuccess, setCodSuccess] = useState(false);
+
   const subtotal = cartItems.reduce(
     (total, item) => total + item.selectedSize.price * item.quantity,
     0
@@ -76,64 +81,95 @@ export default function CheckoutPage() {
     }
   };
 
-  const handleProceed = async () => {
+  // Opens the payment modal after validation
+  const handleProceed = () => {
     if (!validateDetails()) return;
-  
+    setShowPaymentModal(true);
+  };
+
+  // Stripe payment
+  const handleStripePayment = async () => {
+    setPaymentLoading("stripe");
     try {
-      // Check authentication
-      const authRes = await fetch("/api/me");
-      const user = await authRes.json();
-  
-      if (!user) {
-        router.push("/register");
-        return;
-      }
-  
-      // Create Stripe session
-      const response = await fetch(
-        "/api/create-checkout-session",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+      const response = await fetch("/api/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer: {
+            name: details.name,
+            email: details.email,
+            phone: details.phone,
+            address: details.address,
+            city: details.city,
           },
-  
-          body: JSON.stringify({
-            customer: {
-              name: details.name,
-              email: details.email,
-              phone: details.phone,
-              address: details.address,
-              city: details.city,
-            },
-  
-            items: cartItems.map((item) => ({
-              productId: item.id,
-              name: item.name,
-              size: item.selectedSize.size,
-              price: item.selectedSize.price,
-              quantity: item.quantity,
-              image: item.image,
-            })),
-  
-            subtotal,
-            deliveryFee,
-            discount,
-            grandTotal,
-          }),
-        }
-      );
-  
+          items: cartItems.map((item) => ({
+            productId: item.id,
+            name: item.name,
+            size: item.selectedSize.size,
+            price: item.selectedSize.price,
+            quantity: item.quantity,
+            image: item.image,
+          })),
+          subtotal,
+          deliveryFee,
+          discount,
+          grandTotal,
+        }),
+      });
+
       const data = await response.json();
-  
       if (data.url) {
         window.location.href = data.url;
       } else {
         console.error("Stripe URL not found", data);
+        setPaymentLoading(null);
       }
     } catch (error) {
       console.error("Checkout Error:", error);
-      router.push("/register");
+      setPaymentLoading(null);
+    }
+  };
+
+  // Cash on Delivery
+  const handleCOD = async () => {
+    setPaymentLoading("cod");
+    try {
+      const response = await fetch("/api/cod-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer: {
+            name: details.name,
+            email: details.email,
+            phone: details.phone,
+            address: details.address,
+            city: details.city,
+          },
+          items: cartItems.map((item) => ({
+            productId: item.id,
+            name: item.name,
+            size: item.selectedSize.size,
+            price: item.selectedSize.price,
+            quantity: item.quantity,
+            image: item.image,
+          })),
+          subtotal,
+          deliveryFee,
+          discount,
+          grandTotal,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setCodSuccess(true);
+      } else {
+        console.error("COD order failed", data);
+        setPaymentLoading(null);
+      }
+    } catch (error) {
+      console.error("COD Error:", error);
+      setPaymentLoading(null);
     }
   };
 
@@ -413,7 +449,7 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                {/* Delivery preview (shows once user starts filling) */}
+                {/* Delivery preview */}
                 {details.name && details.city && (
                   <div className="bg-gray-50 border border-gray-100 rounded-xl p-3 mb-4">
                     <p className="text-[11px] text-gray-400 mb-1">Delivering to</p>
@@ -447,6 +483,147 @@ export default function CheckoutPage() {
           </div>
         )}
       </div>
+
+      {/* ── Payment Method Modal ── */}
+      {showPaymentModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm px-4 pb-4 sm:pb-0"
+          onClick={(e) => {
+            if (e.target === e.currentTarget && !paymentLoading) setShowPaymentModal(false);
+          }}
+        >
+          <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden">
+
+            {codSuccess ? (
+              /* ── COD Success State ── */
+              <div className="p-8 text-center">
+                <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-7 h-7 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h2 className="text-[18px] font-semibold text-gray-900 mb-1">Order placed!</h2>
+                <p className="text-[13px] text-gray-500 mb-1">
+                  We've sent the order details to <span className="font-medium text-gray-700">{details.email}</span>
+                </p>
+                <p className="text-[13px] text-gray-500 mb-6">
+                  Keep <span className="font-semibold text-gray-800">Rs.{grandTotal.toLocaleString("en-IN")}</span> ready for delivery.
+                </p>
+                <button
+                  onClick={() => router.push("/")}
+                  className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-[14px] font-medium transition-colors"
+                >
+                  Back to home
+                </button>
+              </div>
+            ) : (
+              /* ── Payment Options ── */
+              <>
+                {/* Modal header */}
+                <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-gray-100">
+                  <div>
+                    <h2 className="text-[16px] font-semibold text-gray-900">Choose payment method</h2>
+                    <p className="text-[12px] text-gray-400 mt-0.5">
+                      Total: <span className="font-medium text-gray-700">Rs.{grandTotal.toLocaleString("en-IN")}</span>
+                    </p>
+                  </div>
+                  {!paymentLoading && (
+                    <button
+                      onClick={() => setShowPaymentModal(false)}
+                      className="w-8 h-8 flex items-center justify-center rounded-lg border border-gray-200 text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+
+                {/* Options */}
+                <div className="p-6 flex flex-col gap-3">
+
+                  {/* Stripe */}
+                  <button
+                    onClick={handleStripePayment}
+                    disabled={!!paymentLoading}
+                    className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 text-left transition-all ${
+                      paymentLoading === "stripe"
+                        ? "border-blue-400 bg-blue-50"
+                        : "border-gray-200 hover:border-blue-300 hover:bg-blue-50/50"
+                    } disabled:opacity-60`}
+                  >
+                    <div className="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
+                      {paymentLoading === "stripe" ? (
+                        <svg className="w-5 h-5 text-blue-600 animate-spin" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                      ) : (
+                        <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                          <rect x="2" y="5" width="20" height="14" rx="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <path d="M2 10h20" strokeLinecap="round" />
+                        </svg>
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-[14px] font-semibold text-gray-900">Pay with card</p>
+                      <p className="text-[12px] text-gray-400 mt-0.5">Secure payment via Stripe · UPI, cards accepted</p>
+                    </div>
+                    {paymentLoading !== "stripe" && (
+                      <svg className="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                      </svg>
+                    )}
+                  </button>
+
+                  {/* Divider */}
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 h-px bg-gray-100" />
+                    <span className="text-[11px] text-gray-400">or</span>
+                    <div className="flex-1 h-px bg-gray-100" />
+                  </div>
+
+                  {/* Cash on Delivery */}
+                  <button
+                    onClick={handleCOD}
+                    disabled={!!paymentLoading}
+                    className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 text-left transition-all ${
+                      paymentLoading === "cod"
+                        ? "border-emerald-400 bg-emerald-50"
+                        : "border-gray-200 hover:border-emerald-300 hover:bg-emerald-50/50"
+                    } disabled:opacity-60`}
+                  >
+                    <div className="w-11 h-11 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                      {paymentLoading === "cod" ? (
+                        <svg className="w-5 h-5 text-emerald-600 animate-spin" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                      ) : (
+                        <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-[14px] font-semibold text-gray-900">Cash on delivery</p>
+                      <p className="text-[12px] text-gray-400 mt-0.5">Pay Rs.{grandTotal.toLocaleString("en-IN")} when your order arrives</p>
+                    </div>
+                    {paymentLoading !== "cod" && (
+                      <svg className="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                      </svg>
+                    )}
+                  </button>
+
+                  {/* Security note */}
+                  <p className="text-center text-[11px] text-gray-400 mt-1">
+                    🔒 Your information is encrypted and secure
+                  </p>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
